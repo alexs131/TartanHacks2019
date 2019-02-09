@@ -102,8 +102,6 @@ def generate_dict(pills, session_info):
         #new_resp['fulfillmentText'] += (', ' + pills[i]['name'])
         new_resp['payload']['google']['richResponse']['items'][0]['simpleResponse']['textToSpeech'] += (', ' + pills[i]['name'])
 
-        new_resp['payload']['google']['richResponse']['items'][0]['simpleResponse']['textToSpeech'] += ", Would you like to know more?"
-
       else:
         break
   else:

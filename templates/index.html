@@ -3,7 +3,7 @@
     <head>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-      <title>Local Music</title>
+      <title>Doctor Help</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="/static/css/bootstrap.css" rel='stylesheet' type='text/css' />
@@ -49,6 +49,7 @@
           font-family: 'Open Sans', sans-serif;
           font-size: 32px;
           margin-bottom: 3px;
+            color: #0e0f16;
         }
 
         .entry-header {
@@ -97,6 +98,7 @@
                 <th>Shape</th>
                 <th>Pill Text</th>
                 <th>Identified Pill</th>
+                <th>Date and Time</th>
             </tr>
           </thead>
 
@@ -108,6 +110,7 @@
                  <td> {{row[3]}}</td>
                  <td>{{row[4]}}</td>
                  <td>{{row[5]}}</td>
+                <td>{{row[6]}}</td>
             </tr>
           {% endfor %}
           </tbody>

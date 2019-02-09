@@ -5,7 +5,7 @@ import requests, json
 from flask import Flask, make_response, jsonify, request, current_app, render_template, g
 from card_dict import *
 
-
+from datetime import datetime
 
 # initialize the flask app
 app = Flask(__name__)
@@ -119,8 +119,9 @@ def results():
 
     db = get_db()
     cur = db.cursor()
-    cur.execute("INSERT INTO patient_data (name, color, shape, writing, identified_pill) VALUES (?,?,?,?,?)",
-                ("John Doe",color,shape,writing,str(pill_names)))
+    time = datetime.now().strftime("%B %d, %Y %I:%M%p")
+    cur.execute("INSERT INTO patient_data (name, color, shape, writing, identified_pill,date) VALUES (?,?,?,?,?,?)",
+                ("John Doe",color,shape,writing,str(pill_names),time))
     db.commit()
 
     return final_dict
