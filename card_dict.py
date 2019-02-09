@@ -64,6 +64,8 @@ carousel = {
     }
 },  "fulfillmentMessages": [
   ],
+
+
 }
 
 carousel_item = {
@@ -77,7 +79,7 @@ carousel_item = {
   }
 }
 
-def generate_dict(pills):
+def generate_dict(pills, session_info):
   new_resp = copy.deepcopy(carousel)
 
   new_resp['payload']['google']['richResponse']['items'][0]['simpleResponse']['textToSpeech'] = "Here's what I found: "
@@ -85,7 +87,7 @@ def generate_dict(pills):
   new_resp['fulfillmentText'] = "Here's what I found: "
 
   items = new_resp['payload']['google']['richResponse']['items'][1]['carouselBrowse']['items']
-
+  #pill_ndcs = []
   for i in range(4):
     if i < len(pills):
       new_item = copy.deepcopy(carousel_item)
@@ -93,6 +95,7 @@ def generate_dict(pills):
       new_item['openUrlAction']['url'] = 'http://www.google.com/search?q={name}'.format(name=pills[i]['name'])
       new_item['image']['url'] = pills[i]['imageUrl']
       new_item['image']['accessibilityText'] = pills[i]['name']
+      #pill_ndcs.append(pills[i]['relabelersNdc9'][0]['ndc9'][0])
       items.append(new_item)
 
       #new_resp['fulfillmentText'] += (', ' + pills[i]['name'])
@@ -101,4 +104,10 @@ def generate_dict(pills):
     else:
       break
 
+
+
+  new_resp['payload']['google']['richResponse']['items'][0]['simpleResponse']['textToSpeech'] += ", Would you like to know more?"
+  #new_resp['outputContexts'][0]['parameters']['ndcs'] = str(pill_ndcs)
+  #new_resp['followupEventInput']['parameters']['ndcs'] = str(pill_ndcs)
+  #new_resp['outputContexts'][0]['name'] = (session_info + "MoreInfo")
   return new_resp
