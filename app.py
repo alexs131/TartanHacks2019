@@ -3,7 +3,7 @@ import sqlite3
 
 import requests, json
 from flask import Flask, make_response, jsonify, request, current_app, render_template, g
-from card_dict import card
+from card_dict import *
 
 
 
@@ -41,31 +41,45 @@ def results():
     req = request.get_json(force=True)
     print(req)
 
-    color = req.get('queryResult').get('outputContexts')[0].get('parameters').get('color')
+    color = ""
+    writing = ""
+    #color = req.get('queryResult').get('outputContexts')[0].get('parameters').get('color')
     shape = req.get('queryResult').get('outputContexts')[0].get('parameters').get('shape')
+    #writing = req.get('queryResult').get('outputContexts')[0].get('parameters').get('writing')
+    shape2 = req.get('queryResult').get('outputContexts')[0].get('parameters').get('shape2')
+    sides = req.get('queryResult').get('outputContexts')[0].get('parameters').get('sides')
 
-    if shape == '3':
-        shape = 'triangle'
-    elif shape == '4':
-        shape = 'trapezoid'
-    elif shape == '5':
-        shape = 'pentagon'
-    elif shape == '6':
-        shape = 'hexagon'
-    elif shape == '7':
-        shape = 'heptagon'
-    elif shape == '8':
-        shape = 'octagon'
+    if shape2:
+        shape = shape2
+    if sides:
+        if sides == '3':
+            shape = 'triangle'
+        elif sides == '4':
+            shape = 'trapezoid'
+        elif sides == '5':
+            shape = 'pentagon'
+        elif sides == '6':
+            shape = 'hexagon'
+        elif sides == '7':
+            shape = 'heptagon'
+        elif sides == '8':
+            shape = 'octagon'
 
-    writing = req.get('queryResult').get('outputContexts')[0].get('parameters').get('writing')
+    for context in req.get('queryResult').get('outputContexts'):
+        if context.get('parameters').get('color'):
+            color = context.get('parameters').get('color')
+            writing = context.get('parameters').get('writing')
+            break
 
-    params = "color={color}&shape={shape}&writing={writing}".format(color=color,shape=shape,writing=writing)
+
+    params = "color={color}&shape={shape}&imprint={writing}".format(color=color,shape=shape,writing=writing)
 
     rx_api_str = RXIMAGE_API.format(apiName="rximage",apiVersion="1",resourcePath="rxnav",parameters=params)
 
     rx_req = requests.request('GET',rx_api_str)
 
     rx_dict = json.loads(rx_req.text)
+    print(rx_dict)
     reply_status = rx_dict['replyStatus']
     if reply_status['success'] != True:
         return {'fulfillmentText': "Sorry, I couldn't find a pill that matched your description."}
@@ -77,35 +91,32 @@ def results():
     if len(items) == 0:
         return {'fulfillmentText': "Sorry, I couldn't find a pill that matched your description."}
 
-    pill = items[0]
-    new_card = card.copy()
-    new_card["fulfillmentText"] = pill['name']
+    final_dict = generate_dict(items)
+    print(final_dict)
 
-    new_card['payload']['google']['richResponse']['items'][0]['simpleResponse']['textToSpeech'] = pill['name']
-
-    card_content = new_card['payload']['google']['richResponse']['items'][1]['basicCard']
-
-    card_content['subtitle'] = pill['name']
-    card_content['image']['url'] = pill['imageUrl']
-    card_content['image']["accessibilityText"] = pill['name']
-    card_content['buttons'][0]['openUrlAction']['url'] = 'http://www.google.com/search?q={name}'.format(name=pill['name'])
+    pill_names = []
+    for i in range(4):
+        if i < len(items):
+            pill_names.append(items[i]['name'])
+        else:
+            break
 
     db = get_db()
     cur = db.cursor()
     cur.execute("INSERT INTO patient_data (name, color, shape, writing, identified_pill) VALUES (?,?,?,?,?)",
-                ("testuser",color,shape,writing,pill['name']))
+                ("testuser",color,shape,writing,str(pill_names)))
     db.commit()
 
-    # return a fulfillment response
-    print(new_card)
-    return new_card
+    return final_dict
 
 # create a route for webhook
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
+    print("Request!!")
     # return response
     return make_response(jsonify(results()))
 
 # run the app
 if __name__ == '__main__':
     app.run()
+
