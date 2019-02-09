@@ -66,7 +66,6 @@ def results():
     rx_req = requests.request('GET',rx_api_str)
 
     rx_dict = json.loads(rx_req.text)
-    print(rx_dict)
     reply_status = rx_dict['replyStatus']
     if reply_status['success'] != True:
         return {'fulfillmentText': "Sorry, I couldn't find a pill that matched your description."}
