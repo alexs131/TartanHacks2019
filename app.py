@@ -104,7 +104,7 @@ def results():
     db = get_db()
     cur = db.cursor()
     cur.execute("INSERT INTO patient_data (name, color, shape, writing, identified_pill) VALUES (?,?,?,?,?)",
-                ("testuser",color,shape,writing,str(pill_names)))
+                ("John Doe",color,shape,writing,str(pill_names)))
     db.commit()
 
     return final_dict
@@ -119,4 +119,3 @@ def webhook():
 # run the app
 if __name__ == '__main__':
     app.run()
-
