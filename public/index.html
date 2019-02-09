@@ -1,22 +1,31 @@
 <html>
-  <body>
-  <h1 id="bigOne"></h1>
-  <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
-  <script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyAdDSCKc-C4q1qakoue6VsEKjzcs_AHJ_s",
-    authDomain: "tartanhacks-19.firebaseapp.com",
-    databaseURL: "https://tartanhacks-19.firebaseio.com",
-    projectId: "tartanhacks-19",
-    storageBucket: "tartanhacks-19.appspot.com",
-    messagingSenderId: "788022005215"
-  };
-  firebase.initializeApp(config);
-  var bigOne = document.getElementById('bigOne');
-  var dbRef = firebase.database().ref().child('text');
-  dbRef.on('value', snap => bigOne.inner(text = snap.val()));
 
-</script>
+<body>
+  <h1 id="bigOne"></h1>
+  <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script><!-- Firebase App is always required and must be first -->
+  <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-app.js"></script>
+
+  <!-- Add additional services that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-messaging.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-functions.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAdDSCKc-C4q1qakoue6VsEKjzcs_AHJ_s",
+      authDomain: "tartanhacks-19.firebaseapp.com",
+      databaseURL: "https://tartanhacks-19.firebaseio.com",
+      projectId: "tartanhacks-19",
+      storageBucket: "tartanhacks-19.appspot.com",
+      messagingSenderId: "788022005215"
+    };
+    firebase.initializeApp(config);
+    var bigOne = document.getElementById('bigOne');
+    var dbRef = firebase.database().ref().child('text');
+    dbRef.on('value', snap => bigOne.innerText = snap.val());
+  </script>
 </body>
+
 </html>
