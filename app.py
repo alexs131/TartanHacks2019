@@ -35,11 +35,22 @@ def index():
     print(rows)
     return render_template('index.html',rows = rows)
 
+def more_information(ndc):
+    fda_query = "https://api.fda.gov/drug/label.json?search=\"{ndc}\"&limit=1".format(ndc = ndc)
+
+    fda_req = requests.request(fda_query)
+
+
 # function for responses
 def results():
     # build a request object
     req = request.get_json(force=True)
     print(req)
+
+    intent = req.get('queryResult').get('intent').get('displayName')
+    if (intent == 'MoreInfo'):
+        print("yes")
+        return {}
 
     color = ""
     writing = ""
@@ -48,6 +59,11 @@ def results():
     #writing = req.get('queryResult').get('outputContexts')[0].get('parameters').get('writing')
     shape2 = req.get('queryResult').get('outputContexts')[0].get('parameters').get('shape2')
     sides = req.get('queryResult').get('outputContexts')[0].get('parameters').get('sides')
+
+    session_info_pre = req.get('queryResult').get('outputContexts')[0].get('name')
+    session_info_split = session_info_pre.split('/')
+    session_info = "/".join(session_info_split[0:len(session_info_split)-1]) + "/"
+    print(session_info)
 
     if shape2:
         shape = shape2
@@ -91,7 +107,7 @@ def results():
     if len(items) == 0:
         return {'fulfillmentText': "Sorry, I couldn't find a pill that matched your description."}
 
-    final_dict = generate_dict(items)
+    final_dict = generate_dict(items,session_info)
     print(final_dict)
 
     pill_names = []
