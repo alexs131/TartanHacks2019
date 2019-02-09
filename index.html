@@ -1,5 +1,6 @@
 <html>
-  <body> hi
+  <body>
+  <hi id="bigOne"></hi>
   <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
   <script>
   // Initialize Firebase
@@ -12,6 +13,10 @@
     messagingSenderId: "788022005215"
   };
   firebase.initializeApp(config);
-  </body>
+  var bigOne = document.getElementById('bigOne');
+  var dbRef = firebase.database().ref().child('text');
+  dbRef.on('value', snap => bigOne.inner(text = snap.val()));
+
 </script>
+</body>
 </html>
