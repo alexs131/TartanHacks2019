@@ -40,6 +40,8 @@ def results():
     # build a request object
     req = request.get_json(force=True)
     print(req)
+    intent = req.get('intent')[1]
+    if (intent == 'FindPill-yes-yes' or intent == )
 
     color = req.get('queryResult').get('outputContexts')[0].get('parameters').get('color')
     shape = req.get('queryResult').get('outputContexts')[0].get('parameters').get('shape')

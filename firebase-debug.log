@@ -1,0 +1,33 @@
+[debug] [2019-02-09T01:42:04.712Z] ----------------------------------------------------------------------
+[debug] [2019-02-09T01:42:04.715Z] Command:       /usr/local/Cellar/node/11.9.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-09T01:42:04.715Z] CLI Version:   6.3.1
+[debug] [2019-02-09T01:42:04.715Z] Platform:      darwin
+[debug] [2019-02-09T01:42:04.715Z] Node Version:  v11.9.0
+[debug] [2019-02-09T01:42:04.716Z] Time:          Fri Feb 08 2019 20:42:04 GMT-0500 (Eastern Standard Time)
+[debug] [2019-02-09T01:42:04.716Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-09T01:42:04.730Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-09T01:42:04.731Z] > authorizing via signed-in user
+[debug] [2019-02-09T01:42:04.731Z] [iam] checking project tartanhacks-19 for permissions ["firebase.projects.get"]
+[debug] [2019-02-09T01:42:04.734Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/tartanhacks-19:testIamPermissions  
+
+[debug] [2019-02-09T01:42:05.123Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-09T01:42:05.126Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/tartanhacks-19  
+ 
+[debug] [2019-02-09T01:42:05.387Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/alexsingh/Documents/TartanHacks2019'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2019-02-09T01:42:06.077Z] Fetching environment
+[debug] [2019-02-09T01:42:06.083Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/788022005215:getServerAppConfig  
+ 
+[debug] [2019-02-09T01:42:06.085Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/788022005215/clients/_:getWebAppConfig  
+ 
+[debug] [2019-02-09T01:42:06.431Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-09T01:42:06.432Z] Starting @google-cloud/functions-emulator
+[debug] [2019-02-09T01:42:06.501Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+[debug] [2019-02-09T01:42:08.524Z] Parsing function triggers
+[info] i  functions: No HTTPS functions found. Use firebase functions:shell if you would like to emulate other types of functions.
